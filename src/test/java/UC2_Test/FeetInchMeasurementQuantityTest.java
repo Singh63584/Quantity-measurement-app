@@ -12,7 +12,7 @@ public class FeetInchMeasurementQuantityTest {
         assertTrue(f.equals(f));
     }
     @Test
-    void feet_equals_sameValueDifferentInstance() {
+    void feet_equals_sameValue_DifferentInstance() {
         FeetInchMeasurementQuantity.Feet f1 = new FeetInchMeasurementQuantity.Feet(5);
         FeetInchMeasurementQuantity.Feet f2 = new FeetInchMeasurementQuantity.Feet(5);
         assertTrue(f1.equals(f2));
@@ -31,7 +31,7 @@ public class FeetInchMeasurementQuantityTest {
         assertFalse(f.equals(new Object()));
     }
     @Test
-    void checkFeetEquality_staticMethod() {
+    void check_FeetEquality_staticMethod() {
         assertTrue(FeetInchMeasurementQuantity.checkFeetEquality(10, 10));
         assertFalse(FeetInchMeasurementQuantity.checkFeetEquality(10, 11));
     }
