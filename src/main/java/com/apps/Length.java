@@ -5,7 +5,7 @@ public class Length {
     private final LengthUnit unit;
 
     public enum LengthUnit {
-        FEET(12.0), INCHES(1.0);
+        FEET(12.0), INCHES(1.0), YARD(36.0), CENTIMETER(0.393701);
         private final double conversionFactor;
 
         LengthUnit(double conversionFactor) {
@@ -30,7 +30,8 @@ public class Length {
         if (thatLength == null) {
             return false;
         }
-        return Double.compare(this.convertToBaseUnit(), thatLength.convertToBaseUnit()) == 0;
+        //return Double.compare(this.convertToBaseUnit(), thatLength.convertToBaseUnit()) == 0;
+        return Double.compare(Double.parseDouble(String.format("%.2f", this.convertToBaseUnit())), Double.parseDouble(String.format("%.2f", thatLength.convertToBaseUnit()))) == 0;
     }
 
     @Override
