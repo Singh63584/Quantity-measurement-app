@@ -1,37 +1,24 @@
 package com.apps;
+import java.util.Objects;
 
 public class Length {
-    public double value;
+    private final double value;
     private final LengthUnit unit;
-
-    public enum LengthUnit {
-        FEET(12.0), INCHES(1.0), YARD(36.0), CENTIMETER(0.393701);
-        private final double conversionFactor;
-
-        LengthUnit(double conversionFactor) {
-            this.conversionFactor = conversionFactor;
-        }
-
-        public double getConversionFactor() {
-            return conversionFactor;
-        }
-    }
 
     public Length(double value, LengthUnit unit) {
         this.value = value;
         this.unit = unit;
     }
 
-    private double convertToBaseUnit() {
-        return this.value * this.unit.getConversionFactor();
+    private double toInches() {
+        return unit.toInches(value);
     }
 
-    public boolean compare(Length thatLength) {
-        if (thatLength == null) {
-            return false;
-        }
-        //return Double.compare(this.convertToBaseUnit(), thatLength.convertToBaseUnit()) == 0;
-        return Double.compare(Double.parseDouble(String.format("%.2f", this.convertToBaseUnit())), Double.parseDouble(String.format("%.2f", thatLength.convertToBaseUnit()))) == 0;
+    Length convertToBaseUnit(LengthUnit targetUnit) {
+        double inches = this.toInches();
+        double convertedValue = targetUnit.fromInches(inches);
+        convertedValue = Math.round(convertedValue * 100.0) / 100.0;
+        return new Length(convertedValue, targetUnit);
     }
 
     @Override
@@ -43,6 +30,16 @@ public class Length {
             return false;
         }
         Length that = (Length) obj;
-        return compare(that);
+        return Double.compare(this.toInches(), that.toInches()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(toInches());
+    }
+
+    @Override
+    public String toString() {
+        return value + " " + unit;
     }
 }
